@@ -6,7 +6,7 @@
 | This file is dedicated for defining HTTP routes. A single file is enough
 | for majority of projects, however you can define routes in different
 | files and just make sure to import them inside this file. For example
-|
+| 
 | Define routes in following two files
 | ├── start/routes/cart.ts
 | ├── start/routes/customer.ts
@@ -19,33 +19,34 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+import User from 'App/Models/User'
 
 Route.group(() => {
-  Route.get('/stories', () => {
-    return []
+  Route.post('/user', 'UsersController.index')
+  Route.put('/user', 'UsersController.updateUser')
+  Route.delete('/user', 'UsersController.deleteUser')
+
+  Route.post('/story', 'StoriesController.createStory')
+  Route.put('/story/:id', 'StoriesController.updateStory')
+  Route.delete('/story/:id', 'StoriesController.deleteStory')
+
+  Route.post('/comment', '')
+  Route.delete('/comment', '')
+})
+  .prefix('/api/v1')
+  .middleware(async ({ request, response }, next) => {
+    const token = request.headers().authorization?.replace('Bearer ', '')
+    const user = await User.findBy('token', token)
+    if (!!user) {
+      request.updateBody({ ...request.body(), id: user.id })
+      await next()
+    } else {
+      response.status(401)
+      return { error: 'Unauthorized, please login again.' }
+    }
   })
 
-  Route.get('/story/:id', () => {
-    return { content: {} }
-  })
-
-  Route.post('/story/:id', () => {
-    return { content: {} }
-  })
-
-  Route.get('/user', () => {
-    return { user: {} }
-  })
-
-  Route.put('story/:id', () => {
-    return { content: {} }
-  })
-
-  Route.delete('/user', () => {
-    return { user: null }
-  })
+Route.group(() => {
+  Route.get('/stories', 'StoriesController.getStories')
+  Route.get('/story/:id', 'StoriesController.getStory')
 }).prefix('/api/v1')

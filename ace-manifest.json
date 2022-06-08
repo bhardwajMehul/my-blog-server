@@ -1,5 +1,29 @@
 {
   "commands": {
+    "db:create": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/DbCreate",
+      "commandName": "db:create",
+      "description": "Creates a database into sql if it does not exists.",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
+    "db:drop": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/DbDrop",
+      "commandName": "db:drop",
+      "description": "Drops database if exists.",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "dump:rcfile": {
       "settings": {},
       "commandPath": "@adonisjs/core/build/commands/DumpRc",
