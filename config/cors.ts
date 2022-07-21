@@ -33,7 +33,7 @@ const corsConfig: CorsConfig = {
   | Set a list of origins to be allowed for `Access-Control-Allow-Origin`.
   | The value can be one of the following:
   |
-  | https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+  | https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-   -Allow-Origin
   |
   | Boolean (true)    - Allow current request origin.
   | Boolean (false)   - Disallow all.
@@ -44,7 +44,7 @@ const corsConfig: CorsConfig = {
   |                     one of the above values.
   |
   */
-  origin: true,
+  origin: '*',
 
   /*
   |--------------------------------------------------------------------------
