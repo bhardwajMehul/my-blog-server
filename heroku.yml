@@ -1,0 +1,4 @@
+build:
+  web: node ace build --production
+run:
+  web: cp .env.example .env && node build/server.js
