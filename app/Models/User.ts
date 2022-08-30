@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm'
-// import { v4 as uuid } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -33,7 +33,7 @@ export default class User extends BaseModel {
   @beforeCreate()
   public static generateUUID(user: User) {
     if (!user.token) {
-      user.token = parseInt(Math.random().toString().split('.')[1])
+      user.token =uuidv4()
     }
   }
 }

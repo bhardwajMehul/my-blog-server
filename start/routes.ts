@@ -6,7 +6,7 @@
 | This file is dedicated for defining HTTP routes. A single file is enough
 | for majority of projects, however you can define routes in different
 | files and just make sure to import them inside this file. For example
-| 
+|
 | Define routes in following two files
 | ├── start/routes/cart.ts
 | ├── start/routes/customer.ts
@@ -34,17 +34,7 @@ Route.group(() => {
   Route.delete('/comment', '')
 })
   .prefix('/api/v1')
-  .middleware(async ({ request, response }, next) => {
-    const token = request.headers().authorization?.replace('Bearer ', '')
-    const user = await User.findBy('token', token)
-    if (!!user) {
-      request.updateBody({ ...request.body(), id: user.id })
-      await next()
-    } else {
-      response.status(401)
-      return { error: 'Unauthorized, please login again.' }
-    }
-  })
+  .middleware('auth:api')
 
 Route.group(() => {
   Route.get('/stories', 'StoriesController.getStories')
